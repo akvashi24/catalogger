@@ -1,6 +1,7 @@
 import { Link, useSearchParams, useNavigate } from 'react-router-dom'
 import { useEffect, useState } from 'react'
 import { setAccessToken } from '../services/api'
+import twitter from '../assets/twitter.svg'
 
 const TWITTER_HANDLE = "akvashi24"
 const TWITTER_LINK = "https://twitter.com/akvashi24"
@@ -53,7 +54,7 @@ export default function Home() {
                         </div>
                     </div>
                     <div className="flex items-center justify-center pt-4 mb-4">
-                        <img alt="Twitter Logo" className="h-7 w-7" src="/icons/twitter-logo.svg" />
+                        <img alt="Twitter Logo" className="h-7 w-7" src={twitter} />
                         <a
                             className="font-semibold text-zinc-100 decoration-cyan-400"
                             href={TWITTER_LINK}

@@ -2,6 +2,8 @@ import { useEffect, useState } from 'react'
 import { useSearchParams } from 'react-router-dom'
 import { storeAccessToken } from '../services/api'
 import CurrentlyPlaying from './currentlyPlaying'
+import twitter from '../assets/twitter.svg'
+
 const TWITTER_HANDLE = "akvashi24"
 const TWITTER_LINK = "https://twitter.com/akvashi24"
 
@@ -40,7 +42,7 @@ export default function Tools() {
 
     return (
         <div>
-            <div className="h-screen px-40 overflow-scroll text-center bg-zinc-900">
+            <div className="h-screen px-12 overflow-scroll text-center md:px-40 bg-zinc-900">
                 <div className="flex flex-col h-full bg-zinc-900">
                     <div className="flex flex-row-reverse px-4 py-5 h-15">
                         {accessToken ? button("Logged in", true) : button("Shit's fucked?", false)}
@@ -56,7 +58,7 @@ export default function Tools() {
                     </div>
                     <div className="flex-grow"></div>
                     <div className="flex items-center justify-center pt-4 mb-4 justify-self-end">
-                        <img alt="Twitter Logo" className="h-7 w-7" src="/icons/twitter-logo.svg" />
+                        <img alt="Twitter Logo" className="h-7 w-7" src={twitter} />
                         <a
                             className="font-semibold text-zinc-100 decoration-cyan-400"
                             href={TWITTER_LINK}
