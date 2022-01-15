@@ -1,7 +1,6 @@
-import { Link, useSearchParams, useNavigate } from 'react-router-dom'
-import { useEffect, useState } from 'react'
-import { setAccessToken } from '../services/api'
 import twitter from '../assets/twitter.svg'
+import { useState } from 'react'
+import { storeAccessToken } from '../services/api'
 
 const TWITTER_HANDLE = "akvashi24"
 const TWITTER_LINK = "https://twitter.com/akvashi24"
@@ -11,6 +10,8 @@ export default function Home() {
     const redirectUri = process.env.NODE_ENV === "development" ? "http://localhost:3000/tools" : process.env.NODE_ENV === "production" ? "https://catalogger-blush.vercel.app/tools" : ""
 
     const allSpotifyScopes = 'user-read-playback-state user-modify-playback-state user-read-currently-playing user-read-email user-follow-modify user-follow-read user-library-modify user-library-read streaming app-remote-control user-read-playback-position user-top-read user-read-recently-played playlist-modify-private playlist-read-collaborative playlist-read-private playlist-modify-public'
+
+    const [rerender, setRerender] = useState(false)
 
     const initialAuthPayload = {
         "response_type": 'code',
@@ -27,6 +28,17 @@ export default function Home() {
     const handleClear = () => {
         window.localStorage.removeItem('accessToken')
         window.localStorage.removeItem('expiresAt')
+        setRerender(true)
+    }
+
+    const handleRefresh = () => {
+        const refreshToken = window.localStorage.getItem('refreshToken')
+        if (refreshToken === null) {
+            console.log('No refresh token')
+        }
+        else {
+            storeAccessToken(refreshToken, true)
+        }
     }
 
     const accessToken = window.localStorage.getItem('accessToken')
@@ -47,9 +59,14 @@ export default function Home() {
                                 </a>
                             </div>
                         </div>
-                        <div className="flex content-center w-1/2 mx-auto overflow-wrap">
+                        <div className="flex content-center w-1/2 mx-auto mb-4 overflow-wrap">
                             <button onClick={handleClear} className="flex items-center px-8 py-2 mx-auto text-xl font-semibold text-white bg-red-500 rounded-lg">
                                 Clear
+                                </button>
+                        </div>
+                        <div className="flex content-center w-1/2 mx-auto overflow-wrap">
+                            <button onClick={handleRefresh} className="flex items-center px-8 py-2 mx-auto text-xl font-semibold text-white bg-yellow-500 rounded-lg">
+                                Refresh token
                                 </button>
                         </div>
                     </div>

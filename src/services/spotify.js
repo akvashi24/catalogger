@@ -21,12 +21,34 @@ const getConfig = () => {
 export const getCurrentlyPlaying = async (code) => {
     const config = getConfig()
     const path = spotifyURL + 'me/player/currently-playing'
-    const result = spotify.get(path, config).catch(error => {
+    const result = await spotify.get(path, config).catch(error => {
         // TODO: (akv) this doesn't work if the endpoint doesn't exist
         logErrors(error);
         return false;
     })
     return result
+}
+
+export const getAllPlaylists = async (userId, limit) => {
+    const config = getConfig()
+    const path = spotifyURL + `users/${userId}/playlists?limit=${limit}`
+    const result = await spotify.get(path, config).catch(error => {
+        // TODO: (akv) this doesn't work if the endpoint doesn't exist
+        logErrors(error);
+        return false;
+    })
+    return result
+}
+
+export const getUserDetails = async () => {
+    const config = getConfig()
+    const path = spotifyURL + 'me'
+    const result = await spotify.get(path, config).catch(error => {
+        // TODO: (akv) this doesn't work if the endpoint doesn't exist
+        logErrors(error);
+        return false;
+    })
+    return result?.data
 }
 
 
