@@ -50,7 +50,7 @@ export default function Home() {
                     <div className="pt-40 text-center bg-zinc-900">
                         <div className="flex flex-col mb-20">
                             <span className="mb-4 text-5xl font-bold tracking-tight text-white">Catalogger</span>
-                            <span className="text-gray-400 text tracking-ight">Simple Spotify tools like unliking in bulk, liking all playlist, and more.</span>
+                            <span className="text-gray-400 text tracking-ight">Simple Spotify tools for a bespoke method of cataloguing music.</span>
                         </div>
                         <div className="flex content-center w-1/2 mx-auto mb-4 overflow-wrap">
                             <div className="flex items-center px-8 py-2 mx-auto text-xl font-semibold text-white rounded-lg bg-spotify-green">
