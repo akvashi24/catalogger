@@ -1,63 +1,66 @@
-import { useEffect, useState } from 'react'
-import { useSearchParams } from 'react-router-dom'
-import { storeAccessToken } from '../services/api'
-import { getUserDetails } from '../services/spotify'
+import { useEffect, useState, useContext } from 'react'
+import { getCurrentlyPlaying, getAllPlaylists, deleteSongFromPlaylist, addSongToPlaylist } from '../services/spotify'
 import CurrentlyPlaying from './currentlyPlaying'
 import twitter from '../assets/twitter.svg'
 import Playlists from './playlists'
+import UserContext from '../services/context'
+import DeleteFromPlaylist from './deleteFromPlaylist'
 
 const TWITTER_HANDLE = "akvashi24"
 const TWITTER_LINK = "https://twitter.com/akvashi24"
 
 export default function Tools() {
+    const [currentlyPlaying, setCurrentlyPlaying] = useState(null)
+    const [playlists, setPlaylists] = useState([])
+    const [pinnedPlaylist, setPinnedPlaylist] = useState(null)
+    const user = useContext(UserContext)
+    useEffect(
+        () => {
+            const reallyHighLimit = 50
+            console.log('checking for user context', user)
+            if (user) {
+                const req = getAllPlaylists(user.id, reallyHighLimit)
+                req.then(
+                    result => setPlaylists(result?.data.items)
+                )
+                console.log(playlists)
+            }
+        }, [user]
+    )
+    console.log('playlists', playlists)
+    useEffect(
+        () => {
+            const interval = setInterval(() => {
+                const req = getCurrentlyPlaying()
+                req.then(
+                    result => setCurrentlyPlaying(result.data)
+                )
+            }, 2000)
 
-    let [accessToken, setAccessToken] = useState(null)
-    let [user, setUser] = useState(null)
-    let [searchParams, setSearchParams] = useSearchParams();
 
-    const getNewAccessToken = () => {
-        const code = searchParams.get('code')
-        if (code != null) {
-            const tokenFromAPI = storeAccessToken(code, false).then(
-                result => {
-                    if (!result) {
-                        console.log('fuck you', result);
-                    }
-                    if (result) {
-                        setAccessToken(result)
-                    }
-                }
-            )
+            return () => clearInterval(interval)
+        }, []
+    )
+
+    const handlePin = (mouseEvent) => {
+        const [playlistId, playlistSnapshotId] = mouseEvent.currentTarget.id.split('-')
+        const playlistName = mouseEvent.currentTarget.childNodes[0].innerHTML
+        if (pinnedPlaylist?.id === playlistId) {
+            setPinnedPlaylist(null)
+        }
+        else {
+            setPinnedPlaylist({ id: playlistId, name: playlistName, snapshotId: playlistSnapshotId })
         }
     }
 
-    const getNewUserDetails = () => {
-        const result = getUserDetails().then(
-            result => {
-                if (!result) {
-                    console.log('damn user details failed', result);
-                }
-                if (result) {
-                    console.log('user', result)
-                    setUser(result)
-                }
-            }
-        )
-    }
 
-    useEffect(
-        () => {
-            let tokenFromStorage = window.localStorage.getItem('accessToken')
-            if (tokenFromStorage === null) {
-                getNewAccessToken()
-            } else {
-                setAccessToken(tokenFromStorage)
-            }
-            if (user === null) {
-                getNewUserDetails()
-            }
-        }, []
-    )
+    const handlePlaylistClick = (mouseEvent) => {
+        const playlistId = mouseEvent.currentTarget.id
+        if (currentlyPlaying) {
+            addSongToPlaylist([currentlyPlaying.item.uri], playlistId)
+            deleteSongFromPlaylist([{ uri: currentlyPlaying.item.uri }], pinnedPlaylist.id, pinnedPlaylist.snapshotId)
+        }
+    }
 
     const button = (text, success) => {
         let result = (
@@ -74,8 +77,8 @@ export default function Tools() {
         <div>
             <div className="h-screen px-12 overflow-scroll text-center md:px-20 bg-zinc-900">
                 <div className="flex flex-row justify-between h-full">
-                    <div id='left-panel' className="w-80">
-
+                    <div id='left-panel' className="flex flex-col px-12 mt-48 w-80">
+                        <DeleteFromPlaylist currentSong={currentlyPlaying?.item} playlists={playlists} pinned={pinnedPlaylist} handlePin={handlePin} />
                     </div>
                     <div id="center-panel" className="flex flex-col h-full w-80">
                         <div className="pt-10 text-center">
@@ -83,7 +86,7 @@ export default function Tools() {
                                 <span className="mb-4 text-5xl font-bold tracking-tight text-white">Catalogger</span>
                             </div>
                             <div className="flex flex-col content-center w-full mx-auto overflow-wrap">
-                                {accessToken !== null ? <CurrentlyPlaying /> : null}
+                                <CurrentlyPlaying currentlyPlaying={currentlyPlaying} />
                             </div>
                         </div>
                         <div className="flex-grow"></div>
@@ -98,8 +101,7 @@ export default function Tools() {
                         </div>
                     </div>
                     <div id='right-panel' className="flex flex-col px-12 mt-48 w-80">
-                        {user?.id ? <Playlists userId={user.id} /> : null}
-
+                        <Playlists currentSong={currentlyPlaying?.item} playlists={playlists} handlePlaylistClick={handlePlaylistClick} />
                     </div>
                 </div>
             </div >

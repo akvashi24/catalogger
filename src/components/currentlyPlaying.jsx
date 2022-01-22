@@ -1,29 +1,14 @@
-import { getCurrentlyPlaying, playHeat } from '../services/spotify'
-import { useEffect, useState } from 'react'
 import { Track } from "./track"
-export default function CurrentlyPlaying() {
-    const [currentlyPlaying, setCurrentlyPlaying] = useState(null)
-    useEffect(
-        () => {
-            const interval = setInterval(() => {
-                const req = getCurrentlyPlaying()
-                req.then(
-                    result => setCurrentlyPlaying(result.data)
-                )
-            }, 2000)
 
-
-            return () => clearInterval(interval)
-        }, []
-    )
-    console.log(currentlyPlaying)
-    const albumArt = () => currentlyPlaying?.item?.album.images[0].url
-    const songTitle = () => currentlyPlaying?.item?.name
-    const albumTitle = () => currentlyPlaying?.item?.album.name
-    const artistNames = () => currentlyPlaying?.item?.artists.map(artist => artist.name)
+export default function CurrentlyPlaying(props) {
+    console.log('current playing', props.currentlyPlaying)
+    const albumArt = () => props.currentlyPlaying?.item?.album.images[0].url
+    const songTitle = () => props.currentlyPlaying?.item?.name
+    const albumTitle = () => props.currentlyPlaying?.item?.album.name
+    const artistNames = () => props.currentlyPlaying?.item?.artists.map(artist => artist.name)
 
     let trackProps;
-    if (currentlyPlaying !== null && currentlyPlaying.item !== undefined) {
+    if (props.currentlyPlaying !== null && props.currentlyPlaying.item !== undefined) {
         trackProps = {
             albumArt: albumArt(),
             songTitle: songTitle(),
@@ -32,16 +17,12 @@ export default function CurrentlyPlaying() {
         }
     }
 
-    const handlePlayHeat = () => {
-        playHeat()
-    }
-
-    if (currentlyPlaying === null) {
+    if (props.currentlyPlaying === null) {
         return <div className="font-bold text-white">Loading...</div>
     }
     return <div className="flex flex-row justify-center">
         {
-            currentlyPlaying === null || currentlyPlaying.item === undefined ? <div className="flex px-6 py-2 font-bold text-white bg-gray-600 rounded cursor-pointer">Nothing's playing</div> : <Track {...trackProps} />
+            props.currentlyPlaying === null || props.currentlyPlaying.item === undefined ? <div className="flex px-6 py-2 font-bold text-white bg-gray-600 rounded cursor-pointer">Nothing's playing</div> : <Track {...trackProps} />
         }
 
     </div>

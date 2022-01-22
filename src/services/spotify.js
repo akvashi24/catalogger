@@ -40,6 +40,29 @@ export const getAllPlaylists = async (userId, limit) => {
     return result
 }
 
+export const addSongToPlaylist = async (songIds, playlistId) => {
+    const config = getConfig()
+    const path = spotifyURL + `playlists/${playlistId}/tracks`
+    const result = await spotify.post(path, songIds, config).catch(error => {
+        // TODO: (akv) this doesn't work if the endpoint doesn't exist
+        logErrors(error);
+        return false;
+    })
+    return result
+}
+
+export const deleteSongFromPlaylist = async (songIds, playlistId, snapshotId) => {
+    const config = getConfig()
+    const path = spotifyURL + `playlists/${playlistId}/tracks`
+    config.data = { tracks: songIds, snapshot_id: snapshotId }
+    const result = await spotify.delete(path, config).catch(error => {
+        // TODO: (akv) this doesn't work if the endpoint doesn't exist
+        logErrors(error);
+        return false;
+    })
+    return result
+}
+
 export const getUserDetails = async () => {
     const config = getConfig()
     const path = spotifyURL + 'me'
