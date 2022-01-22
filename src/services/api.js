@@ -30,7 +30,7 @@ export const checkRefresh = () => {
 
 export const storeAccessToken = async (code, refresh = false) => {
     console.log('refresh', refresh)
-    const path = `api/v1/getToken?code=${code}&refresh=${refresh}`;
+    const path = `api/v1/getToken?code=${code}&refresh=${refresh}&app=catalogger`;
     const result = await api.get(path).catch(error => {
         // TODO: (akv) this doesn't work if the endpoint doesn't exist
         logErrors(error);
