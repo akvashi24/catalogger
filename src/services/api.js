@@ -38,7 +38,9 @@ export const storeAccessToken = async (code, refresh = false) => {
     })
     if (result?.data?.access_token) {
         window.localStorage.setItem("accessToken", result?.data?.access_token)
-        window.localStorage.setItem("refreshToken", result?.data?.refresh_token)
+        if (!refresh) {
+            window.localStorage.setItem("refreshToken", result?.data?.refresh_token)
+        }
         const now = new Date()
         window.localStorage.setItem("expiresAt", now.getTime() + result.data.expires_in * 1000)
     }
