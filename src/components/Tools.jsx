@@ -84,7 +84,7 @@ export default function Tools() {
     return (
         <div>
             <div className="h-screen px-12 overflow-scroll text-center md:px-20 bg-zinc-900">
-                <div className="flex flex-col justify-between sm:flex-row">
+                <div className="flex flex-col justify-between h-auto sm:h-full sm:flex-row">
                     <div id='left-panel' className="flex flex-col hidden px-12 mt-48 w-80 sm:block">
                         <DeleteFromPlaylist currentSong={currentlyPlaying?.item} playlists={playlists} pinned={pinnedPlaylist} handlePin={handlePin} />
                     </div>
@@ -112,7 +112,7 @@ export default function Tools() {
                             >{`built by @${TWITTER_HANDLE}`}</a>
                         </div>
                     </div>
-                    <div id='mobile-view-panel' className="flex flex-col px-12 mt-8 sm:hidden sm:mt-48 max-w-80 sm:h-auto">
+                    <div id='mobile-view-panel' className="flex flex-col px-12 mt-8 sm:hidden sm:mt-48 max-w-80">
                         <DeleteFromPlaylist currentSong={currentlyPlaying?.item} playlists={playlists} pinned={pinnedPlaylist} handlePin={handlePin} />
                     </div>
                     <div id='right-panel' className="flex flex-col h-64 px-12 mt-8 sm:mt-48 max-w-80 sm:h-auto">
