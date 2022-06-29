@@ -5,6 +5,7 @@ import twitter from '../assets/twitter.svg'
 import Playlists from './playlists'
 import UserContext from '../services/context'
 import DeleteFromPlaylist from './deleteFromPlaylist'
+import toast from 'react-hot-toast'
 
 const TWITTER_HANDLE = "akvashi24"
 const TWITTER_LINK = "https://twitter.com/akvashi24"
@@ -55,10 +56,17 @@ export default function Tools() {
 
 
     const handlePlaylistClick = (mouseEvent) => {
-        const playlistId = mouseEvent.currentTarget.id
+        const targetPlaylistId = mouseEvent.currentTarget.id
+        const targetPlaylistName = mouseEvent.currentTarget.textContent
         if (currentlyPlaying) {
-            addSongToPlaylist([currentlyPlaying.item.uri], playlistId)
-            deleteSongFromPlaylist([{ uri: currentlyPlaying.item.uri }], pinnedPlaylist.id, pinnedPlaylist.snapshotId)
+            let addReq = addSongToPlaylist([currentlyPlaying.item.uri], targetPlaylistId)
+            let deleteReq = deleteSongFromPlaylist([{ uri: currentlyPlaying.item.uri }], pinnedPlaylist?.id, pinnedPlaylist?.snapshotId)
+            addReq.then(
+                () => toast.success(`Added to ${targetPlaylistName}!`, { icon: '🎵' })
+            )
+            deleteReq.then(
+                () => toast.success(`Deleted from ${pinnedPlaylist.name}!`, { icon: '🎵' })
+            )
         }
     }
 
