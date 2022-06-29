@@ -115,7 +115,7 @@ export default function Tools() {
                     <div id='mobile-view-panel' className="flex flex-col px-12 mt-8 sm:hidden sm:mt-48 max-w-80">
                         <DeleteFromPlaylist currentSong={currentlyPlaying?.item} playlists={playlists} pinned={pinnedPlaylist} handlePin={handlePin} />
                     </div>
-                    <div id='right-panel' className="flex flex-col h-64 px-12 mt-8 sm:mt-48 max-w-80 sm:h-auto">
+                    <div id='right-panel' className="flex flex-col h-64 px-12 mt-8 sm:mt-48 sm:w-80 sm:h-auto">
                         <Playlists currentSong={currentlyPlaying?.item} playlists={playlists} handlePlaylistClick={handlePlaylistClick} />
                     </div>
                 </div>
