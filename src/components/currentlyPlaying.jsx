@@ -1,7 +1,7 @@
 import { Track } from "./track"
 
 export default function CurrentlyPlaying(props) {
-    console.log('current playing', props.currentlyPlaying)
+    console.debug('current playing', props.currentlyPlaying)
     const albumArt = () => props.currentlyPlaying?.item?.album.images[0].url
     const songTitle = () => props.currentlyPlaying?.item?.name
     const albumTitle = () => props.currentlyPlaying?.item?.album.name

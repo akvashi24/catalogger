@@ -11,7 +11,7 @@ export default function DeleteFromPlaylist(props) {
     )
 
     const playlists = props.playlists.map(playlist => {
-        return <button key={playlist.id} id={`${playlist.id}-${playlist.snapshot_id}`} onClick={props.handlePin} className="flex px-8 py-5 mb-3 font-semibold text-center text-white rounded-lg bg-neutral-700">
+        return <button key={playlist.id} id={`${playlist.id}-${playlist.snapshot_id}`} onClick={props.handlePin} className="flex px-8 py-5 mb-3 font-semibold text-center text-white rounded-lg bg-neutral-700 hover:bg-red-500">
             <span className="mx-auto">{playlist.name}</span>
         </button>
     })

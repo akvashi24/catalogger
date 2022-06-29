@@ -1,7 +1,8 @@
 import { useEffect, useState, useContext } from 'react'
-import { getCurrentlyPlaying, getAllPlaylists, deleteSongFromPlaylist, addSongToPlaylist } from '../services/spotify'
+import { getCurrentlyPlaying, getAllPlaylists, deleteSongFromPlaylist, addSongToPlaylist, skipToNext } from '../services/spotify'
 import CurrentlyPlaying from './currentlyPlaying'
 import twitter from '../assets/twitter.svg'
+import close from '../assets/close.png'
 import Playlists from './playlists'
 import UserContext from '../services/context'
 import DeleteFromPlaylist from './deleteFromPlaylist'
@@ -24,11 +25,10 @@ export default function Tools() {
                 req.then(
                     result => setPlaylists(result?.data.items)
                 )
-                console.log(playlists)
+                console.debug("Playlists:", playlists)
             }
         }, [user]
     )
-    console.log('playlists', playlists)
     useEffect(
         () => {
             const interval = setInterval(() => {
@@ -70,16 +70,16 @@ export default function Tools() {
         }
     }
 
-    const button = (text, success) => {
-        let result = (
-            <div className={"flex items-center px-4 py-2 text-xl font-semibold text-white rounded-lg " + (success ? "bg-spotify-green" : "bg-red-500")}>
-                {text}
-            </div>
-        )
-        return result
+    const handleDeleteAndSkip = () => {
+        if (currentlyPlaying) {
+            let deleteReq = deleteSongFromPlaylist([{ uri: currentlyPlaying.item.uri }], pinnedPlaylist?.id, pinnedPlaylist?.snapshotId)
+            skipToNext()
+            deleteReq.then(
+                () => toast.success(`Deleted from ${pinnedPlaylist.name}!`, { icon: '🎵' })
+            )
+        }
     }
 
-    const gradient = <span className={"bg-gradient-to-br text-center from-cyan-400 to-purple-500 bg-clip-text text-transparent text-6xl font-black mb-8"}>Next.js Starterpack</span>
 
     return (
         <div>
@@ -95,6 +95,10 @@ export default function Tools() {
                             </div>
                             <div className="flex flex-col content-center w-full mx-auto overflow-wrap">
                                 <CurrentlyPlaying currentlyPlaying={currentlyPlaying} />
+                                {currentlyPlaying ?
+                                    <img alt="Delete and skip" className="w-5 h-5 mt-4 cursor-pointer" src={close} onClick={handleDeleteAndSkip} />
+                                    : null
+                                }
                             </div>
                         </div>
                         <div className="flex-grow"></div>

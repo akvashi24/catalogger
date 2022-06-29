@@ -29,6 +29,17 @@ export const getCurrentlyPlaying = async (code) => {
     return result
 }
 
+export const skipToNext = async () => {
+    const config = await getConfig()
+    const path = spotifyURL + 'me/player/next'
+    const result = await spotify.put(path, config).catch(error => {
+        // TODO: (akv) this doesn't work if the endpoint doesn't exist
+        logErrors(error);
+        return false;
+    })
+    return result
+}
+
 export const getAllPlaylists = async (userId, limit) => {
     const config = getConfig()
     const path = spotifyURL + `users/${userId}/playlists?limit=${limit}`
