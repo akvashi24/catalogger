@@ -90,7 +90,7 @@ export default function Tools() {
                     </div>
                     <div id="center-panel" className="flex flex-col h-full max-w-80">
                         <div className="pt-10 text-center">
-                            <div className="flex flex-col mb-24">
+                            <div className="flex flex-col mb-8 sm:mb-24">
                                 <span className="mb-4 text-5xl font-bold tracking-tight text-white">Catalogger</span>
                             </div>
                             <div className="flex flex-col content-center w-full mx-auto overflow-wrap">
