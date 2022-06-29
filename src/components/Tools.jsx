@@ -84,11 +84,11 @@ export default function Tools() {
     return (
         <div>
             <div className="h-screen px-12 overflow-scroll text-center md:px-20 bg-zinc-900">
-                <div className="flex flex-row justify-between h-full">
-                    <div id='left-panel' className="flex flex-col px-12 mt-48 w-80">
+                <div className="flex flex-col justify-between sm:flex-row">
+                    <div id='left-panel' className="flex flex-col hidden px-12 mt-48 w-80 sm:block">
                         <DeleteFromPlaylist currentSong={currentlyPlaying?.item} playlists={playlists} pinned={pinnedPlaylist} handlePin={handlePin} />
                     </div>
-                    <div id="center-panel" className="flex flex-col h-full w-80">
+                    <div id="center-panel" className="flex flex-col h-full max-w-80">
                         <div className="pt-10 text-center">
                             <div className="flex flex-col mb-24">
                                 <span className="mb-4 text-5xl font-bold tracking-tight text-white">Catalogger</span>
@@ -96,13 +96,13 @@ export default function Tools() {
                             <div className="flex flex-col content-center w-full mx-auto overflow-wrap">
                                 <CurrentlyPlaying currentlyPlaying={currentlyPlaying} />
                                 {currentlyPlaying ?
-                                    <img alt="Delete and skip" className="w-5 h-5 mt-4 cursor-pointer" src={close} onClick={handleDeleteAndSkip} />
+                                    <img alt="Delete and skip" className="w-5 h-5 mt-4 ml-6 cursor-pointer" src={close} onClick={handleDeleteAndSkip} />
                                     : null
                                 }
                             </div>
                         </div>
                         <div className="flex-grow"></div>
-                        <div className="flex items-center justify-center pt-4 mb-4 justify-self-end">
+                        <div className="items-center justify-center hidden pt-4 mb-4 sm:flex justify-self-end">
                             <img alt="Twitter Logo" className="h-7 w-7" src={twitter} />
                             <a
                                 className="font-semibold text-zinc-100 decoration-cyan-400"
@@ -112,7 +112,10 @@ export default function Tools() {
                             >{`built by @${TWITTER_HANDLE}`}</a>
                         </div>
                     </div>
-                    <div id='right-panel' className="flex flex-col px-12 mt-48 w-80">
+                    <div id='mobile-view-panel' className="flex flex-col px-12 mt-8 sm:hidden sm:mt-48 max-w-80 sm:h-auto">
+                        <DeleteFromPlaylist currentSong={currentlyPlaying?.item} playlists={playlists} pinned={pinnedPlaylist} handlePin={handlePin} />
+                    </div>
+                    <div id='right-panel' className="flex flex-col h-64 px-12 mt-8 sm:mt-48 max-w-80 sm:h-auto">
                         <Playlists currentSong={currentlyPlaying?.item} playlists={playlists} handlePlaylistClick={handlePlaylistClick} />
                     </div>
                 </div>
