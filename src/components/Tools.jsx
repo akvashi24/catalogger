@@ -9,6 +9,7 @@ import {
 import CurrentlyPlaying from "./currentlyPlaying";
 import twitter from "../assets/twitter.svg";
 import close from "../assets/close.png";
+import skip from "../assets/fast-forward.png";
 import Playlists from "./playlists";
 import UserContext from "../services/context";
 import DeleteFromPlaylist from "./deleteFromPlaylist";
@@ -116,12 +117,20 @@ export default function Tools() {
               <div className="flex flex-col content-center w-full mx-auto overflow-wrap">
                 <CurrentlyPlaying currentlyPlaying={currentlyPlaying} />
                 {currentlyPlaying ? (
-                  <img
-                    alt="Delete and skip"
-                    className="w-5 h-5 mt-4 cursor-pointer"
-                    src={close}
-                    onClick={handleDeleteAndSkip}
-                  />
+                  <div className="flex-row flex justify-between">
+                    <img
+                      alt="Delete and skip"
+                      className="w-5 h-5 mt-6 cursor-pointer"
+                      src={close}
+                      onClick={handleDeleteAndSkip}
+                    />
+                    <img
+                      alt="Skip"
+                      className="w-6 h-6 mt-6 cursor-pointer inline-block"
+                      src={skip}
+                      onClick={skipToNext}
+                    />
+                  </div>
                 ) : null}
               </div>
             </div>
