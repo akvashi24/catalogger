@@ -29,9 +29,8 @@ export default function Tools() {
     if (user) {
       const req = getAllPlaylists(user.id, reallyHighLimit);
       req.then((result) => setPlaylists(result?.data.items));
-      console.debug("Playlists:", playlists);
     }
-  }, [user]);
+  }, [playlists, user]);
   useEffect(() => {
     const interval = setInterval(() => {
       const req = getCurrentlyPlaying();
