@@ -8,7 +8,7 @@ export default function CurrentlyPlaying(props) {
     const artistNames = () => props.currentlyPlaying?.item?.artists.map(artist => artist.name)
 
     let trackProps;
-    if (props.currentlyPlaying !== null && props.currentlyPlaying.item !== undefined) {
+    if (props.currentlyPlaying !== null && props.currentlyPlaying?.item !== undefined) {
         trackProps = {
             albumArt: albumArt(),
             songTitle: songTitle(),
