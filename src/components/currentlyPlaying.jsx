@@ -22,7 +22,7 @@ export default function CurrentlyPlaying(props) {
     }
     return <div className="flex flex-row justify-center">
         {
-            props.currentlyPlaying === null || props.currentlyPlaying.item === undefined ? <div className="flex px-6 py-2 font-bold text-white bg-gray-600 rounded cursor-pointer">Nothing's playing</div> : <Track {...trackProps} />
+            !props.currentlyPlaying || props.currentlyPlaying?.item === undefined ? <div className="flex px-6 py-2 font-bold text-white bg-gray-600 rounded cursor-pointer">Nothing's playing</div> : <Track {...trackProps} />
         }
 
     </div>
