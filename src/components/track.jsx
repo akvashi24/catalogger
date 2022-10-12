@@ -5,7 +5,7 @@ export const Track = (props) => {
             <div className="flex flex-col justify-center text-left text-white">
                 <span className="text-2xl font-bold ">{props.songTitle}</span>
                 <span className="text-gray-300 text-l">{props.albumTitle}</span>
-                <span className="text-gray-300 text-g">{props.artistNames.join(', ')}</span>
+                <span className="text-gray-300 text-g">{props.artistNames ? props.artistNames.join(', ') : '-'}</span>
             </div>
         </div>
     )
