@@ -1,6 +1,6 @@
 
 import axios from "axios";
-const apiURL = process.env.NODE_ENV === "development" ? "http://localhost:5000/" : process.env.NODE_ENV === "production" ? "https://api.audiome.io/" : ""
+const apiURL = process.env.NODE_ENV === "development" ? "http://127.0.0.1:5000/" : process.env.NODE_ENV === "production" ? "https://api.audiome.io/" : ""
 
 const api = axios.create({
     baseURL: apiURL

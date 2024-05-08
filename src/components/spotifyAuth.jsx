@@ -7,12 +7,14 @@ import { UserProvider } from '../services/context'
 
 export default function SpotifyAuth(props) {
 
+    // eslint-disable-next-line no-unused-vars
     const [accessToken, setAccessToken] = useState(null)
     const [localUser, setLocalUser] = useState(null)
+    // eslint-disable-next-line no-unused-vars
     const [searchParams, setSearchParams] = useSearchParams();
 
     const getNewUserDetails = () => {
-        const result = getUserDetails().then(
+        getUserDetails().then(
             result => {
                 if (!result) {
                     console.log('damn user details failed', result);
@@ -25,24 +27,25 @@ export default function SpotifyAuth(props) {
         )
     }
 
-    const getNewAccessToken = () => {
-        const code = searchParams.get('code')
-        if (code != null) {
-            const tokenFromAPI = storeAccessToken(code, false).then(
-                result => {
-                    if (!result) {
-                        console.log('fuck you', result);
-                    }
-                    if (result) {
-                        setAccessToken(result)
-                    }
-                }
-            )
-        }
-    }
+
 
     useEffect(
         () => {
+            const getNewAccessToken = () => {
+                const code = searchParams.get('code')
+                if (code != null) {
+                    storeAccessToken(code, false).then(
+                        result => {
+                            if (!result) {
+                                console.log('fuck you', result);
+                            }
+                            if (result) {
+                                setAccessToken(result)
+                            }
+                        }
+                    )
+                }
+            }
             let tokenFromStorage = window.localStorage.getItem('accessToken')
             if (tokenFromStorage === null) {
                 getNewAccessToken()
@@ -52,16 +55,12 @@ export default function SpotifyAuth(props) {
             if (localUser === null) {
                 getNewUserDetails()
             }
-        }, []
+        }, [localUser, searchParams]
     )
-
-    const defaultUserContext = { user: null, email: null, displayName: null, userId: null, uri: null }
-
-    const UserContext = React.createContext(defaultUserContext)
 
     return (
         <UserProvider value={localUser} >
-            { props.children}
+            {props.children}
         </UserProvider >
     )
 }

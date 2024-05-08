@@ -1,6 +1,6 @@
 import twitter from '../assets/twitter.svg'
-import { useState } from 'react'
 import { storeAccessToken } from '../services/api'
+import { useNavigate } from 'react-router'
 
 const TWITTER_HANDLE = "akvashi24"
 const TWITTER_LINK = "https://twitter.com/akvashi24"
@@ -10,8 +10,6 @@ export default function Home() {
     const redirectUri = process.env.NODE_ENV === "development" ? "http://localhost:3000/tools" : process.env.NODE_ENV === "production" ? "https://www.catalogger.xyz/tools" : ""
 
     const allSpotifyScopes = 'user-read-playback-state user-modify-playback-state user-read-currently-playing user-read-email user-follow-modify user-follow-read user-library-modify user-library-read streaming app-remote-control user-read-playback-position user-top-read user-read-recently-played playlist-modify-private playlist-read-collaborative playlist-read-private playlist-modify-public'
-
-    const [rerender, setRerender] = useState(false)
 
     const initialAuthPayload = {
         "response_type": 'code',
@@ -23,12 +21,14 @@ export default function Home() {
     var queryString = Object.keys(initialAuthPayload).map(key => key + '=' + initialAuthPayload[key]).join('&');
     const spotifyURL = 'https://accounts.spotify.com/authorize?' + queryString
 
-    const gradient = <span className={"bg-gradient-to-br text-center from-cyan-400 to-purple-500 bg-clip-text text-transparent text-6xl font-black mb-8"}>Next.js Starterpack</span>
+
+    const navigate = useNavigate()
 
     const handleClear = () => {
         window.localStorage.removeItem('accessToken')
         window.localStorage.removeItem('expiresAt')
-        setRerender(true)
+        navigate(0)
+
     }
 
     const handleRefresh = () => {
@@ -62,12 +62,12 @@ export default function Home() {
                         <div className="flex content-center w-1/2 mx-auto mb-4 overflow-wrap">
                             <button onClick={handleClear} className="flex items-center px-8 py-2 mx-auto text-xl font-semibold text-white bg-red-500 rounded-lg">
                                 Clear
-                                </button>
+                            </button>
                         </div>
                         <div className="flex content-center w-1/2 mx-auto overflow-wrap">
                             <button onClick={handleRefresh} className="flex items-center px-8 py-2 mx-auto text-xl font-semibold text-white bg-yellow-500 rounded-lg">
                                 Refresh token
-                                </button>
+                            </button>
                         </div>
                     </div>
                     <div className="flex items-center justify-center pt-4 mb-4">

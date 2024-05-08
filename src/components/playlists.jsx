@@ -1,14 +1,4 @@
-import { addSongToPlaylist } from '../services/spotify'
-
 export default function Playlists(props) {
-
-    const handlePlaylistClick = (mouseEvent) => {
-        const playlistId = mouseEvent.currentTarget.id
-        if (props.currentSong) {
-            addSongToPlaylist([props.currentSong.uri], playlistId)
-        }
-    }
-
     return (
         <div className='flex flex-col w-full overflow-scroll h-3/4'>
             {
