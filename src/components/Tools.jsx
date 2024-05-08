@@ -10,6 +10,7 @@ import CurrentlyPlaying from "./currentlyPlaying";
 import twitter from "../assets/twitter.svg";
 import close from "../assets/close.png";
 import skip from "../assets/fast-forward.png";
+import spotifyLogo from '../assets/spotify_icon_white.png';
 import DestinationPlaylists from "./destinationPlaylists";
 import UserContext from "../services/context";
 import SourcePlaylists from "./sourcePlaylists";
@@ -55,6 +56,7 @@ export default function Tools() {
     }
   };
 
+  console.log(currentlyPlaying)
   const handlePlaylistClick = (mouseEvent) => {
     const targetPlaylistId = mouseEvent.currentTarget.id;
     const targetPlaylistName = mouseEvent.currentTarget.textContent;
@@ -111,16 +113,23 @@ export default function Tools() {
               <div className="flex flex-col content-center w-full mx-auto overflow-wrap">
                 <CurrentlyPlaying currentlyPlaying={currentlyPlaying} />
                 {currentlyPlaying ? (
-                  <div className="flex-row flex justify-between">
+                  <div className="flex-row flex justify-between mt-6">
                     <img
                       alt="Delete and skip"
-                      className="w-5 h-5 mt-6 cursor-pointer"
+                      className="w-5 h-5 cursor-pointer"
                       src={close}
                       onClick={handleDeleteAndSkip}
                     />
+                    <a href={currentlyPlaying?.item.external_urls.spotify} target="_blank" rel="noreferrer">
+                      <img
+                        alt="Spotify Logo"
+                        className="w-5 h-5 cursor-pointer"
+                        src={spotifyLogo}
+                      />
+                    </a>
                     <img
                       alt="Skip"
-                      className="w-6 h-6 mt-6 cursor-pointer inline-block"
+                      className="w-6 h-6 cursor-pointer inline-block"
                       src={skip}
                       onClick={skipToNext}
                     />
