@@ -10,9 +10,9 @@ import CurrentlyPlaying from "./currentlyPlaying";
 import twitter from "../assets/twitter.svg";
 import close from "../assets/close.png";
 import skip from "../assets/fast-forward.png";
-import Playlists from "./playlists";
+import DestinationPlaylists from "./destinationPlaylists";
 import UserContext from "../services/context";
-import DeleteFromPlaylist from "./deleteFromPlaylist";
+import SourcePlaylists from "./sourcePlaylists";
 import toast from "react-hot-toast";
 
 const TWITTER_HANDLE = "akvashi24";
@@ -93,13 +93,13 @@ export default function Tools() {
 
   return (
     <div>
-      <div className="h-screen px-12 overflow-scroll text-center md:px-20 bg-zinc-900">
-        <div className="flex flex-col justify-between h-auto sm:h-full sm:flex-row">
+      <div className="h-screen px-4 md:px-0 overflow-scroll text-center md:px-20 bg-zinc-900 pt-48">
+        <div className="flex flex-col justify-center lg:gap-32 md:gap-20 h-auto md:h-full md:flex-row">
           <div
             id="left-panel"
-            className="flex flex-col hidden px-12 mt-48 w-80 sm:block"
+            className="flex flex-col hidden px-12 w-80 md:block"
           >
-            <DeleteFromPlaylist
+            <SourcePlaylists
               currentSong={currentlyPlaying?.item}
               playlists={playlists}
               pinned={pinnedPlaylist}
@@ -107,12 +107,7 @@ export default function Tools() {
             />
           </div>
           <div id="center-panel" className="flex flex-col h-full max-w-80">
-            <div className="pt-10 text-center">
-              <div className="flex flex-col mb-8 sm:mb-24">
-                <span className="mb-4 text-5xl font-bold tracking-tight text-white">
-                  Catalogger
-                </span>
-              </div>
+            <div className="text-center">
               <div className="flex flex-col content-center w-full mx-auto overflow-wrap">
                 <CurrentlyPlaying currentlyPlaying={currentlyPlaying} />
                 {currentlyPlaying ? (
@@ -134,7 +129,7 @@ export default function Tools() {
               </div>
             </div>
             <div className="flex-grow"></div>
-            <div className="items-center justify-center hidden pt-4 mb-4 sm:flex justify-self-end">
+            <div className="items-center justify-center hidden pt-4 mb-4 md:flex justify-self-end">
               <img alt="Twitter Logo" className="h-7 w-7" src={twitter} />
               <a
                 className="font-semibold text-zinc-100 decoration-cyan-400"
@@ -146,9 +141,9 @@ export default function Tools() {
           </div>
           <div
             id="mobile-view-panel"
-            className="flex flex-col px-12 mt-8 sm:hidden sm:mt-48 max-w-80"
+            className="flex flex-col px-12 mt-8 md:hidden max-w-80"
           >
-            <DeleteFromPlaylist
+            <SourcePlaylists
               currentSong={currentlyPlaying?.item}
               playlists={playlists}
               pinned={pinnedPlaylist}
@@ -157,9 +152,9 @@ export default function Tools() {
           </div>
           <div
             id="right-panel"
-            className="flex flex-col h-64 px-12 mt-8 sm:mt-48 sm:w-80 sm:h-auto"
+            className="flex flex-col h-64 px-12 md:w-80 md:h-auto"
           >
-            <Playlists
+            <DestinationPlaylists
               currentSong={currentlyPlaying?.item}
               playlists={playlists}
               handlePlaylistClick={handlePlaylistClick}

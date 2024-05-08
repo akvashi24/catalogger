@@ -1,6 +1,6 @@
 import Header from './header'
 
-export default function DeleteFromPlaylist(props) {
+export default function SourcePlaylists(props) {
     const pinnedPlaylist = (
         <button id={props.pinned ? props.pinned.id : 'placeholder'} onClick={props.handlePin} className="flex px-8 py-5 mb-3 font-semibold text-center text-white border-2 border-red-600 rounded-lg">
             <span className="mx-auto">{props.pinned?.name}</span>
