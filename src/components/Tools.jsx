@@ -169,7 +169,7 @@ export default function Tools() {
           >
             <DestinationPlaylists
               currentSong={currentlyPlaying?.item}
-              playlists={playlists}
+              playlists={filtered(playlists)}
               handlePlaylistClick={handlePlaylistClick}
             />
           </div>
