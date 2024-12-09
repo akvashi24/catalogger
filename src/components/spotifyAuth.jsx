@@ -17,10 +17,9 @@ export default function SpotifyAuth(props) {
         getUserDetails().then(
             result => {
                 if (!result) {
-                    console.log('damn user details failed', result);
+                    console.debug('User details failed:', result);
                 }
                 if (result) {
-                    console.log('user', result)
                     setLocalUser(result)
                 }
             }
@@ -37,7 +36,7 @@ export default function SpotifyAuth(props) {
                     storeAccessToken(code, false).then(
                         result => {
                             if (!result) {
-                                console.log('fuck you', result);
+                                console.debug('Spotify auth failed:', result);
                             }
                             if (result) {
                                 setAccessToken(result)

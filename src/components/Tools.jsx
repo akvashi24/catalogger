@@ -26,7 +26,6 @@ export default function Tools() {
   const user = useContext(UserContext);
   useEffect(() => {
     const reallyHighLimit = 50;
-    console.log("checking for user context", user);
     if (user) {
       const req = getAllPlaylists(user.id, reallyHighLimit);
       req.then((result) => setPlaylists(result?.data.items));
@@ -56,7 +55,6 @@ export default function Tools() {
     }
   };
 
-  console.log(currentlyPlaying)
   const handlePlaylistClick = (mouseEvent) => {
     const targetPlaylistId = mouseEvent.currentTarget.id;
     const targetPlaylistName = mouseEvent.currentTarget.textContent;
@@ -95,7 +93,7 @@ export default function Tools() {
 
   const filtered = (list) => {
     const result = !list ? list : list.filter(obj => obj !== null);
-    console.log(result)
+    console.debug('Filtered playlists:', result)
     return result
   }
 

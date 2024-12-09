@@ -34,7 +34,7 @@ export default function Home() {
     const handleRefresh = () => {
         const refreshToken = window.localStorage.getItem('refreshToken')
         if (refreshToken === null) {
-            console.log('No refresh token')
+            console.debug('No refresh token')
         }
         else {
             storeAccessToken(refreshToken, true)
