@@ -93,6 +93,10 @@ export default function Tools() {
     }
   };
 
+  const filtered = (list) => {
+    return !list ? list : list.filter(obj => obj !== null);
+  }
+
   return (
     <div>
       <div className="h-screen px-4 md:px-0 overflow-scroll text-center md:px-20 bg-zinc-900 pt-48">
@@ -103,7 +107,7 @@ export default function Tools() {
           >
             <SourcePlaylists
               currentSong={currentlyPlaying?.item}
-              playlists={playlists}
+              playlists={filtered(playlists)}
               pinned={pinnedPlaylist}
               handlePin={handlePin}
             />
@@ -154,7 +158,7 @@ export default function Tools() {
           >
             <SourcePlaylists
               currentSong={currentlyPlaying?.item}
-              playlists={playlists}
+              playlists={filtered(playlists)}
               pinned={pinnedPlaylist}
               handlePin={handlePin}
             />
