@@ -94,7 +94,9 @@ export default function Tools() {
   };
 
   const filtered = (list) => {
-    return !list ? list : list.filter(obj => obj !== null);
+    const result = !list ? list : list.filter(obj => obj !== null);
+    console.log(result)
+    return result
   }
 
   return (
